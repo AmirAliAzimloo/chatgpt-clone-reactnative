@@ -19,7 +19,7 @@ const HeaderDropDown = ({ title, selected, items, onSelect }: Props) => {
       <DropdownMenu.Trigger>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text style={{ fontWeight: '500', fontSize: 16 }}>{title}</Text>
-          {selected && (
+          {selected && ( 
             <Text
               style={{ marginLeft: 10, fontSize: 16, fontWeight: '500', color: Colors.greyLight }}>
               {selected} &gt;
