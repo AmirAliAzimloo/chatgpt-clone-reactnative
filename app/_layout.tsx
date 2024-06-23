@@ -1,11 +1,11 @@
-import { useFonts } from "expo-font";
-import { Slot, SplashScreen, Stack, useRouter, useSegments } from "expo-router";
-import { useEffect } from "react";
-import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import * as SecureStore from "expo-secure-store";
-import { Ionicons } from "@expo/vector-icons";
-import { ActivityIndicator, TouchableOpacity, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useFonts } from 'expo-font';
+import { Slot, SplashScreen, Stack, useRouter, useSegments } from 'expo-router';
+import { useEffect } from 'react';
+import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
+import * as SecureStore from 'expo-secure-store';
+import { Ionicons } from '@expo/vector-icons';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 // Cache the Clerk JWT
@@ -30,45 +30,37 @@ const tokenCache = {
 SplashScreen.preventAutoHideAsync();
 
 const InitialLayout = () => {
-  // const [loaded, error] = useFonts({
-  //   SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  // });
+  const [loaded, error] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  });
   const { isLoaded, isSignedIn } = useAuth();
   const segments = useSegments();
   const router = useRouter();
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  // useEffect(() => {
-  //   if (error) throw error;
-  // }, [error]);
+  useEffect(() => {
+    if (error) throw error;
+  }, [error]);
 
-  useEffect(
-    () => {
-      // if (loaded) {
+  useEffect(() => {
+    if (loaded) {
       SplashScreen.hideAsync();
-      // }
-    },
-    [
-      // loaded
-    ]
-  );
+    }
+  }, [loaded]);
 
   useEffect(() => {
     if (!isLoaded) return;
 
-    const inAuthGroup = segments[0] === "(auth)";
+    const inAuthGroup = segments[0] === '(auth)';
 
     if (isSignedIn && !inAuthGroup) {
-      router.replace("/(auth)/(drawer)/(chat)/new");
+      router.replace('/(auth)/(drawer)/(chat)/new');
     } else if (!isSignedIn) {
-      router.replace("/");
+      router.replace('/');
     }
   }, [isSignedIn]);
 
-  if (
-    // !loaded ||
-    !isLoaded
-  ) {
+  if (!loaded || !isLoaded) {
     return <Slot />;
   }
 
@@ -83,10 +75,10 @@ const InitialLayout = () => {
       <Stack.Screen
         name="login"
         options={{
-          presentation: "modal",
-          title: "",
+          presentation: 'modal',
+          title: '',
           headerTitleStyle: {
-            fontFamily: "mon-sb",
+            fontFamily: 'mon-sb',
           },
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()}>
@@ -102,10 +94,7 @@ const InitialLayout = () => {
 
 const RootLayoutNav = () => {
   return (
-    <ClerkProvider
-      publishableKey={CLERK_PUBLISHABLE_KEY!}
-      tokenCache={tokenCache}
-    >
+    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <InitialLayout />
       </GestureHandlerRootView>

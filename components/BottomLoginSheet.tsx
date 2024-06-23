@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const BottomLoginSheet = () => {
   const { bottom } = useSafeAreaInsets();
-  
+
   return (
     <View style={[styles.container, { paddingBottom: bottom }]}>
       <TouchableOpacity style={[defaultStyles.btn, styles.btnLight]}>
