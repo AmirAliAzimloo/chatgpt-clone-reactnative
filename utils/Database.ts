@@ -5,6 +5,7 @@ import * as FileSystem from 'expo-file-system';
 export async function migrateDbIfNeeded(db: SQLiteDatabase) {
   // Log DB path for debugging
   // console.log(FileSystem.documentDirectory);
+  
   const DATABASE_VERSION = 1;
   let result = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
 
